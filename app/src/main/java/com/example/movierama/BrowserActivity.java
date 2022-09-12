@@ -13,7 +13,16 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SearchView;
 
+import com.example.movierama.Models.Movie;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class BrowserActivity extends AppCompatActivity {
+
+    List<Movie> movies = new ArrayList<>();
+
+    MovieAdapter movieAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,37 +33,41 @@ public class BrowserActivity extends AppCompatActivity {
 
         initSearch();
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.toolbar, menu);
 
-        // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_toolbar_search)
-                                                     .getActionView();
-        searchView.setSearchableInfo(searchManager
-                                             .getSearchableInfo(getComponentName()));
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_toolbar_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         return true;
     }
 
     private void initRecyclerView(){
-        populateList();
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview_browser);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        MovieAdapter movieAdapter = new MovieAdapter(this);
+        movieAdapter = new MovieAdapter(this);
         recyclerView.setAdapter(movieAdapter);
+
+        populateList();
     }
 
     private void populateList(){
+        MovieFavoriteHelper db = new MovieFavoriteHelper(this);
 
+        for(int i = 0; i < 10; i++) {
+            db.insertMovie(i);
+            movies.add(new Movie(i, "Movie " + i, 4 / 5, "12/9/2022", "path"));
+        }
+
+        movieAdapter.updateAdapter(movies);
     }
 
     private void initSearch(){
