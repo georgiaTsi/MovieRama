@@ -12,11 +12,16 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.movierama.Models.Movie;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BrowserActivity extends AppCompatActivity {
 
@@ -56,18 +61,34 @@ public class BrowserActivity extends AppCompatActivity {
         movieAdapter = new MovieAdapter(this);
         recyclerView.setAdapter(movieAdapter);
 
-        populateList();
+        getPopularMovies();
     }
 
-    private void populateList(){
-        MovieFavoriteHelper db = new MovieFavoriteHelper(this);
+    private void getPopularMovies(){
+//        MovieFavoriteHelper db = new MovieFavoriteHelper(this);
+//
+//        for(int i = 0; i < 10; i++) {
+//            db.insertMovie(i);
+//            movies.add(new Movie(i, "Movie " + i, 4 / 5, "12/9/2022", "path"));
+//        }
+//
+//        movieAdapter.updateAdapter(movies);
 
-        for(int i = 0; i < 10; i++) {
-            db.insertMovie(i);
-            movies.add(new Movie(i, "Movie " + i, 4 / 5, "12/9/2022", "path"));
-        }
+        Call<List<Movie>> call = RetrofitClient.getInstance().getMyApi().getMovies();
 
-        movieAdapter.updateAdapter(movies);
+        call.enqueue(new Callback<List<Movie>>() {
+            @Override
+            public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
+                List<Movie> popularMoviesList = response.body();
+
+                movieAdapter.updateAdapter(popularMoviesList);
+            }
+
+            @Override
+            public void onFailure(Call<List<Movie>> call, Throwable t) {
+                Toast.makeText(movieAdapter.activity, "An error has occured", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initSearch(){

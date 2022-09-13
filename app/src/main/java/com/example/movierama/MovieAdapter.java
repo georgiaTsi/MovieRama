@@ -58,7 +58,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
         viewHolder.title.setText(dataSet.get(position).title);
         viewHolder.releaseDate.setText(dataSet.get(position).release_date);
-        viewHolder.rating.setText(dataSet.get(position).vote_averange.toString());
+
+        if(dataSet.get(position).vote_averange != null)
+            viewHolder.rating.setText(dataSet.get(position).vote_averange.toString());
 
         String url = "https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_200x200-min.png";
 
