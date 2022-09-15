@@ -19,6 +19,9 @@ public interface Api {
     @GET("movie/popular")
     Call<PopularMoviesReponse> getMovies(@Query(value = "api_key") String api_key, @Query("language")String language, @Query("page")Integer page);
 
+    @GET("search/movie")
+    Call<PopularMoviesReponse> getSearchMovie(@Query(value = "api_key") String api_key, @Query("query")String query);
+
 //    @GET("movie/{movie_id}/images")
 //    Call<> getImage(@Path(value = "movie_id", encoded = true) Integer movie_id, @Query(value = "api_key") String api_key, @Query("language")String language);
 }

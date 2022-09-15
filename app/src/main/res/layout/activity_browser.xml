@@ -11,14 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent"
-        android:gravity="right">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/imagebutton_search"
-            android:src="@drawable/icon_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/edittext_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search MovieRama"
+            android:drawableLeft="@drawable/icon_search"
+            android:imeOptions="actionSearch"
+            android:inputType="text"/>
 
     </LinearLayout>
 
@@ -26,6 +28,6 @@
         android:id="@+id/recyclerview_browser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/linearlayout_toolbar"/>
+        app:layout_constraintTop_toBottomOf="@+id/linearlayout_toolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
