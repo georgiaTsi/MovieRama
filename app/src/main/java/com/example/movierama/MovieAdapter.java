@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -47,10 +48,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
         ImageView posterImageView = view.findViewById(R.id.imageview_poster);
         TextView titleTextView = view.findViewById(R.id.textview_title);
         TextView releaseDateTextView = view.findViewById(R.id.textview_releasedate);
-        TextView ratingTextView = view.findViewById(R.id.textview_rating);
+        RatingBar ratingBar = view.findViewById(R.id.ratingbar);
         ImageButton favoriteButton = view.findViewById(R.id.imagebutton_favorite);
 
-        return new MovieViewHolder(view, posterImageView, titleTextView, releaseDateTextView, ratingTextView, favoriteButton);
+        return new MovieViewHolder(view, posterImageView, titleTextView, releaseDateTextView, ratingBar, favoriteButton);
     }
 
     @Override
@@ -59,8 +60,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
         viewHolder.title.setText(dataSet.get(position).title);
         viewHolder.releaseDate.setText(dataSet.get(position).release_date);
 
-        if(dataSet.get(position).vote_averange != null)
-            viewHolder.rating.setText(dataSet.get(position).vote_averange.toString());
+        viewHolder.rating.setRating(dataSet.get(position).vote_average/2);
 
         String url = "https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_200x200-min.png";
 
@@ -69,9 +69,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
         final Boolean[] isFavorite = {db.getIsFavorite(dataSet.get(position).id)};
 
         if(isFavorite[0])
-            viewHolder.favorite.setImageResource(R.drawable.icon_starfull);
+            viewHolder.favorite.setImageResource(R.drawable.icon_heart_full);
         else
-            viewHolder.favorite.setImageResource(R.drawable.icon_star);
+            viewHolder.favorite.setImageResource(R.drawable.icon_heart);
 
         viewHolder.favorite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,9 +81,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
                 db.updateMovie(dataSet.get(position).id, isFavorite[0]);
 
                 if(isFavorite[0])
-                    viewHolder.favorite.setImageResource(R.drawable.icon_starfull);
+                    viewHolder.favorite.setImageResource(R.drawable.icon_heart_full);
                 else
-                    viewHolder.favorite.setImageResource(R.drawable.icon_star);
+                    viewHolder.favorite.setImageResource(R.drawable.icon_heart);
             }
         });
 

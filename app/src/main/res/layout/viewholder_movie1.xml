@@ -1,47 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="100dp"
-    android:layout_height="200dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:id="@+id/imageview_poster"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="280dp"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardMaxElevation="12dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/textview_title"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/imageview_poster"
-        android:text="title"
-        android:textColor="@color/black"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textview_releasedate"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/textview_title"
-        android:text="release date"
-        android:textColor="@color/black"/>
+            <ImageView
+                android:id="@+id/imageview_poster"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:src="@drawable/icon_search"/>
 
-    <TextView
-        android:id="@+id/textview_rating"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/textview_releasedate"
-        android:text="rating"
-        android:textColor="@color/black"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/imageview_poster">
+                <LinearLayout
+                    android:id="@+id/linearlayouut_titlerating"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp">
+                    <TextView
+                        android:id="@+id/textview_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="title"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textSize="20sp"
+                        android:textColor="@color/black"/>
 
-    <ImageButton
-        android:id="@+id/imagebutton_favorite"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:cropToPadding="true"
-        android:scaleType="fitStart"
-        app:layout_constraintTop_toBottomOf="@+id/textview_rating"
-        android:src="@drawable/icon_star"/>
+                    <LinearLayout
+                        android:id="@+id/linearlayout_ratingrelease"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textview_title"
+                        android:orientation="horizontal">
+
+                        <RatingBar
+                            android:id="@+id/ratingbar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/Widget.AppCompat.RatingBar.Small"
+                            app:layout_constraintTop_toBottomOf="@+id/textview_releasedate"
+                            android:numStars="5"
+                            android:stepSize="0.1"
+                            android:isIndicator="true"/>
+                        <TextView
+                            android:id="@+id/textview_releasedate"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_marginLeft="10dp"
+                            app:layout_constraintTop_toBottomOf="@+id/textview_title"
+                            android:text="release date"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/imagebutton_favorite"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:cropToPadding="true"
+                    android:backgroundTint="@color/white"
+                    app:layout_constraintLeft_toRightOf="@+id/linearlayouut_titlerating"
+                    app:layout_constraintTop_toBottomOf="@+id/imageview_poster"
+                    android:src="@drawable/icon_heart"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

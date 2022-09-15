@@ -15,6 +15,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.movierama.Models.Movie;
+import com.example.movierama.Models.PopularMoviesReponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BrowserActivity extends AppCompatActivity {
+    String API_KEY = "30842f7c80f80bb3ad8a2fb98195544d";
+    String LANGUAGE = "en-US";
+    Integer PAGE = 1;
 
     List<Movie> movies = new ArrayList<>();
 
@@ -65,27 +69,19 @@ public class BrowserActivity extends AppCompatActivity {
     }
 
     private void getPopularMovies(){
-//        MovieFavoriteHelper db = new MovieFavoriteHelper(this);
-//
-//        for(int i = 0; i < 10; i++) {
-//            db.insertMovie(i);
-//            movies.add(new Movie(i, "Movie " + i, 4 / 5, "12/9/2022", "path"));
-//        }
-//
-//        movieAdapter.updateAdapter(movies);
 
-        Call<List<Movie>> call = RetrofitClient.getInstance().getMyApi().getMovies();
+        Call<PopularMoviesReponse> call = RetrofitClient.getInstance().getMyApi().getMovies(API_KEY, LANGUAGE, PAGE);
 
-        call.enqueue(new Callback<List<Movie>>() {
+        call.enqueue(new Callback<PopularMoviesReponse>() {
             @Override
-            public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
-                List<Movie> popularMoviesList = response.body();
+            public void onResponse(Call<PopularMoviesReponse> call, Response<PopularMoviesReponse> response) {
+                PopularMoviesReponse responseBody = response.body();
 
-                movieAdapter.updateAdapter(popularMoviesList);
+                movieAdapter.updateAdapter(responseBody.results);
             }
 
             @Override
-            public void onFailure(Call<List<Movie>> call, Throwable t) {
+            public void onFailure(Call<PopularMoviesReponse> call, Throwable t) {
                 Toast.makeText(movieAdapter.activity, "An error has occured", Toast.LENGTH_SHORT).show();
             }
         });
@@ -98,9 +94,7 @@ public class BrowserActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(BrowserActivity.this, SearchActivity.class);
                 BrowserActivity.this.startActivity(intent);
-
             }
         });
     }
-
 }

@@ -30,7 +30,7 @@ public class MovieFavoriteHelper extends SQLiteOpenHelper {
     public boolean getIsFavorite(Integer id){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor res =  db.rawQuery( "select IsFavorite from Movies where ID="+id+"", null );
+        Cursor res = db.rawQuery( "SELECT IsFavorite FROM Movies WHERE ID='"+id+"'", null );
         res.moveToFirst();
 
         Integer isFavorite = res.getColumnIndex("IsFavorite");

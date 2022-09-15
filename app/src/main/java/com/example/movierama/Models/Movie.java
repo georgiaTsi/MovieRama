@@ -33,12 +33,12 @@ public class Movie {
 
     Boolean video;
 
-    public Number vote_averange;
+    public float vote_average;
 
-    public Movie(Integer id, String title, Number vote_averange, String release_date, String poster_path){
+    public Movie(Integer id, String title, float vote_average, String release_date, String poster_path){
         this.id = id;
         this.title = title;
-        this.vote_averange = vote_averange;
+        this.vote_average = vote_average;
         this.release_date = release_date;
         this.poster_path = poster_path;
     }

@@ -1,8 +1,10 @@
 package com.example.movierama;
 
+import android.media.Rating;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,10 +13,10 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
     public ImageView poster;
     public TextView title;
     public TextView releaseDate;
-    public TextView rating;
+    public RatingBar rating;
     public ImageButton favorite;
 
-    public MovieViewHolder(View view, ImageView poster, TextView releaseDate, TextView title, TextView rating, ImageButton favorite) {
+    public MovieViewHolder(View view, ImageView poster, TextView title, TextView releaseDate, RatingBar rating, ImageButton favorite) {
         super(view);
 
         this.poster = poster;
