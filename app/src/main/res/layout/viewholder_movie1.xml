@@ -26,7 +26,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
-                android:src="@drawable/icon_search"/>
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/poster_1"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -67,7 +69,8 @@
                             app:layout_constraintTop_toBottomOf="@+id/textview_releasedate"
                             android:numStars="5"
                             android:stepSize="0.1"
-                            android:isIndicator="true"/>
+                            android:isIndicator="true"
+                            android:progressTint="@color/navy_blue"/>
                         <TextView
                             android:id="@+id/textview_releasedate"
                             android:layout_width="match_parent"

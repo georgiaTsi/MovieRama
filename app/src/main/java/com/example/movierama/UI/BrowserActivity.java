@@ -1,9 +1,12 @@
-package com.example.movierama;
+package com.example.movierama.UI;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
@@ -11,14 +14,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.movierama.Api.RetrofitClient;
 import com.example.movierama.Models.PopularMoviesReponse;
+import com.example.movierama.R;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.movierama.Api.Api.API_KEY;
+
 public class BrowserActivity extends AppCompatActivity {
-    String API_KEY = "30842f7c80f80bb3ad8a2fb98195544d";
     String LANGUAGE = "en-US";
     Integer CURRENT_PAGE = 0;
 
@@ -41,6 +47,7 @@ public class BrowserActivity extends AppCompatActivity {
 
     private void initRecyclerView(){
 
+        SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swiperefresh);
         RecyclerView recyclerView = findViewById(R.id.recyclerview_browser);
 
         LinearLayoutManager linearLayout = new LinearLayoutManager(this);
@@ -69,6 +76,18 @@ public class BrowserActivity extends AppCompatActivity {
                         }
                     }
                 }
+            }
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                CURRENT_PAGE = 0;
+
+                getPopularMovies();
+
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
@@ -128,5 +147,14 @@ public class BrowserActivity extends AppCompatActivity {
                 Toast.makeText(movieAdapter.activity, "An error has occured", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Integer position = data.getIntExtra("position", -1);
+
+        movieAdapter.notifyItemChanged(position);
     }
 }

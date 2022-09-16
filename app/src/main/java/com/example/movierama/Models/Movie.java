@@ -2,6 +2,8 @@ package com.example.movierama.Models;
 
 import androidx.annotation.Nullable;
 
+import com.google.gson.internal.LinkedTreeMap;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -13,11 +15,11 @@ public class Movie {
 
     Boolean adult;
 
-    String overview;
+    public String overview;
 
     public String release_date;
 
-    ArrayList<Integer> genre_ids;
+    public ArrayList<LinkedTreeMap> genres;
 
     String original_title;
 

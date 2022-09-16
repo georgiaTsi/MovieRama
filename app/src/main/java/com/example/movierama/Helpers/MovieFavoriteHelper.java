@@ -1,10 +1,12 @@
-package com.example.movierama;
+package com.example.movierama.Helpers;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.sql.PreparedStatement;
 
 public class MovieFavoriteHelper extends SQLiteOpenHelper {
 
@@ -15,16 +17,18 @@ public class MovieFavoriteHelper extends SQLiteOpenHelper {
     }
 
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS Movies(ID Integer,IsFavorite Boolean);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS Movies(ID Integer,IsFavorite INTEGER);");
     }
 
     public void insertMovie(Integer id){
         ContentValues contentValues = new ContentValues();
         contentValues.put("ID", id);
-        contentValues.put("IsFavorite", false);
+        contentValues.put("IsFavorite", 1);
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insert("Movies", null, contentValues);
+
+        return;
     }
 
     public boolean getIsFavorite(Integer id){
@@ -33,18 +37,21 @@ public class MovieFavoriteHelper extends SQLiteOpenHelper {
         Cursor res = db.rawQuery( "SELECT IsFavorite FROM Movies WHERE ID='"+id+"'", null );
         res.moveToFirst();
 
-        Integer isFavorite = res.getColumnIndex("IsFavorite");
+        String isFavorite = res.getString(0);
 
         if (!res.isClosed())  {
             res.close();
         }
 
-        return !isFavorite.equals(0);
+        return !isFavorite.equals("0");
     }
 
-    public boolean updateMovie(Integer id, Boolean isFavorite){
+    public boolean updateMovie(Integer id, Boolean isFavoriteBoolean){
+        Integer isFavorite = 0;
+        if(isFavoriteBoolean)
+            isFavorite = 1;
+
         ContentValues contentValues = new ContentValues();
-        contentValues.put("ID", id);
         contentValues.put("IsFavorite", isFavorite);
 
         SQLiteDatabase db = this.getWritableDatabase();

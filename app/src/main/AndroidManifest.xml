@@ -13,20 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieRama">
 
-        <activity
-            android:name=".SearchActivity"
-            android:label="@string/title_activity_search">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".BrowserActivity"
+        <activity android:name=".UI.BrowserActivity"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".UI.DetailedActivity">
         </activity>
     </application>
 

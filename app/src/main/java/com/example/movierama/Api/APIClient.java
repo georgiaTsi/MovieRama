@@ -1,4 +1,4 @@
-package com.example.movierama;
+package com.example.movierama.Api;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

@@ -1,8 +1,10 @@
-package com.example.movierama;
+package com.example.movierama.UI;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.example.movierama.R;
 
 public class SearchActivity extends Activity {
 

@@ -1,13 +1,8 @@
-package com.example.movierama;
+package com.example.movierama.UI;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +11,16 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.movierama.Helpers.DownloadImageTask;
+import com.example.movierama.Helpers.MovieFavoriteHelper;
 import com.example.movierama.Models.Movie;
+import com.example.movierama.R;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.util.Random;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
@@ -62,9 +57,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
         viewHolder.rating.setRating(dataSet.get(position).vote_average/2);
 
-        String url = "https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_200x200-min.png";
+//        String url = "https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_200x200-min.png";
+//
+//        new DownloadImageTask(viewHolder.poster).execute(url);
+        int[] images = {R.drawable.poster_1, R.drawable.poster_2, R.drawable.poster_3};
+        Random rand = new Random();
+        viewHolder.poster.setImageResource(images[rand.nextInt(images.length)]);
 
-        new DownloadImageTask(viewHolder.poster).execute(url);
+        db.insertMovie(dataSet.get(position).id);
 
         final Boolean[] isFavorite = {db.getIsFavorite(dataSet.get(position).id)};
 
@@ -90,9 +90,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(activity.getBaseContext(), DetailedActivity.class);
-//                intent.putExtra("place", dataSet.get(position+1).place);
-//                activity.startActivity(intent);
+                Intent intent = new Intent(activity.getBaseContext(), DetailedActivity.class);
+                intent.putExtra("position", position);
+                intent.putExtra("movieId", dataSet.get(position).id);
+                activity.startActivityForResult(intent, 0);
             }
         });
     }
@@ -117,30 +118,5 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
         dataSet.addAll(newList);
 
         notifyDataSetChanged();
-    }
-
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
     }
 }

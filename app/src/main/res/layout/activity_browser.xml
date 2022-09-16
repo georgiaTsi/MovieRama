@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BrowserActivity">
+    tools:context=".UI.BrowserActivity">
 
     <LinearLayout
         android:id="@+id/linearlayout_toolbar"
@@ -24,10 +24,20 @@
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_browser"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefresh"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/linearlayout_toolbar" />
+        android:orientation="vertical"
+        tools:context=".MainActivity"
+        app:layout_constraintTop_toBottomOf="@+id/linearlayout_toolbar">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_browser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

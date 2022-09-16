@@ -1,4 +1,4 @@
-package com.example.movierama;
+package com.example.movierama.UI;
 
 import android.media.Rating;
 import android.view.View;

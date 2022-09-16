@@ -1,7 +1,10 @@
-package com.example.movierama;
+package com.example.movierama.Api;
 
 import com.example.movierama.Models.Movie;
 import com.example.movierama.Models.PopularMoviesReponse;
+import com.example.movierama.Models.Review;
+import com.example.movierama.Models.ReviewsResponse;
+import com.example.movierama.Models.SimilarsResponse;
 
 import java.util.List;
 
@@ -22,6 +25,12 @@ public interface Api {
     @GET("search/movie")
     Call<PopularMoviesReponse> getSearchMovie(@Query(value = "api_key") String api_key, @Query("query")String query);
 
-//    @GET("movie/{movie_id}/images")
-//    Call<> getImage(@Path(value = "movie_id", encoded = true) Integer movie_id, @Query(value = "api_key") String api_key, @Query("language")String language);
+    @GET("movie/{movie_id}")
+    Call<Movie> getMovieDetails(@Path("movie_id")Integer movie_id, @Query(value = "api_key") String api_key);
+
+    @GET("movie/{movie_id}/reviews")
+    Call<ReviewsResponse> getMovieReviews(@Path("movie_id")Integer movie_id, @Query(value = "api_key") String api_key);
+
+    @GET("movie/{movie_id}/similar")
+    Call<SimilarsResponse> getSimilar(@Path("movie_id")Integer movie_id, @Query(value = "api_key") String api_key);
 }
